@@ -1,0 +1,98 @@
+<%- contentFor('body') %>
+<div class="dashboard-container">
+    <div class="dashboard-header fade-in">
+        <h1 class="dashboard-title">欢迎回来，<span class="highlight"><%= username %></span></h1>
+        <p class="dashboard-subtitle">CloudflareMailServer 企业邮箱管理平台</p>
+    </div>
+
+    <div class="dashboard-content">
+        <% if (locals.error) { %>
+            <div class="alert alert-danger fade-in" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i> <%= error %>
+            </div>
+        <% } %>
+        <div class="dashboard-main">
+            <div class="dashboard-stats">
+                <div class="stat-card glass-card fade-in">
+                    <div class="stat-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-title">邮箱账号</h3>
+                        <p class="stat-value"><%= accountsCount %></p>
+                    </div>
+                    <div class="stat-footer">
+                        <a href="/accounts" class="stat-link">管理 <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="stat-card glass-card fade-in">
+                    <div class="stat-icon">
+                        <i class="bi bi-inbox"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-title">未读邮件</h3>
+                        <p class="stat-value"><%= unreadCount %></p>
+                    </div>
+                    <div class="stat-footer">
+                        <a href="/mail" class="stat-link">查看 <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="stat-card glass-card fade-in">
+                    <div class="stat-icon">
+                        <i class="bi bi-cloud"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-title">域名</h3>
+                        <p class="stat-value"><%= domainsCount %></p>
+                    </div>
+                    <div class="stat-footer">
+                        <span class="stat-info">配置文件</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-actions fade-in">
+                <a href="/accounts/create" class="action-btn btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> 创建新账号
+                </a>
+                <a href="/mail/fetch" class="action-btn btn btn-secondary">
+                    <i class="bi bi-arrow-repeat"></i> 检查新邮件
+                </a>
+                <button id="clear-activities-btn" class="action-btn btn btn-danger">
+                    <i class="bi bi-trash"></i> 清空日志
+                </button>
+            </div>
+
+            <div class="recent-activity glass-card fade-in">
+                <h2 class="section-title">最近活动</h2>
+                <div class="activity-list">
+                    <% if (recentActivities && recentActivities.length > 0) { %>
+                        <% recentActivities.forEach(activity => { %>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="bi bi-<%= activity.icon %>"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p class="activity-text"><%= activity.text %></p>
+                                    <span class="activity-time"><%= activity.time %></span>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <p>暂无活动记录</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- contentFor('style') %>
+<!-- 使用外部CSS文件 -->
+
+<%- contentFor('script') %>
+<!-- 使用外部JS文件 -->
